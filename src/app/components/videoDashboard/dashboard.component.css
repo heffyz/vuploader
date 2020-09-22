@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.content {
+  flex: 6;
+}
+footer {
+  flex: 1;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+  height: 100%;
+}
+
+.example-label {
+  display: flex;
+  font-family: Verdana, Geneva, sans-serif;
+
+  justify-content: center;
+
+  align-items: center;
+  font-size: 14px;
+  flex: 3;
+}
+
+.example-button-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 8px;
+  flex: 8;
+}
+
+a {
+  margin: 2px;
+  font-family: Verdana, Geneva, sans-serif;
+  text-decoration: none;
+}
+
+.top-list a{
+  
+  font-size: medium;
+  color: #000000c2;
+}
+.bottom-list a{
+  font-size: medium;
+  color: rgba(0, 0, 0, 0.384);
+}
+
+mat-divider{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

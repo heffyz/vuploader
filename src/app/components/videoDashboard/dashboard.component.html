@@ -1,7 +1,28 @@
+<div class="container">
+  <div class="content">
+    <button mat-icon-button class="button" (click)="auth.signOut()">
+      <mat-icon> navigate_before </mat-icon>
+    </button>
 
-  <button class="button" (click)="auth.signOut()"><span class="material-icons">
-    navigate_before
-    </span>
-</button>
-<addvideo></addvideo>
-<mat-divider></mat-divider>
+    <addvideo></addvideo>
+<mat-divider ></mat-divider>
+  </div>
+  <footer>
+    <div class="example-label">Basic</div>
+    <div class="example-button-row">
+      <div class="top-list">
+        <a href="https://www.google.com/" target="_blank">About </a>
+        <a href="https://www.google.com/" target="_blank">Press </a>
+        <a href="https://www.google.com/" target="_blank">Copyright </a>
+        <a href="https://www.google.com/" target="_blank">Advertise </a>
+        <a href="https://www.google.com/" target="_blank">Help </a>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="bottom-list">
+        <a href="https://www.google.com/" target="_blank">Terms </a>
+        <a href="https://www.google.com/" target="_blank">Privacy </a>
+      </div>
+    </div>
+    <div class="example-label">Langages</div>
+  </footer>
+</div>
