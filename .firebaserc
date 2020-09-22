@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "vuploader-a50a8": {
+      "hosting": {
+        "vuploader": [
+          "vuploader-a50a8"
+        ]
+      }
+    }
+  }
+}
