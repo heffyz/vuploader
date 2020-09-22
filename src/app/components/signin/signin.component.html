@@ -1,0 +1,27 @@
+<div class="container">
+  <mat-card class="card mat-elevation-z8">
+    <mat-card-title class="welcome"> Welcome</mat-card-title>
+    <mat-card-content>
+      <mat-form-field color="accent" appearance="standard">
+        <mat-label>Nom Complet</mat-label>
+        <input
+          matInput
+          placeholder="Nom Complet"
+          type="text"
+          [formControl]="name"
+          required
+        />
+      </mat-form-field>
+      <button
+        mat-flat-button
+        type="submit"
+        class="btn"
+        (click)="
+          name.valid ? auth.googleSignin(name.value) : name.markAsTouched()
+        "
+      >
+        Sign In with Google
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

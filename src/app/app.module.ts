@@ -11,6 +11,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
+import { SigninComponent } from './components/signin/signin.component';
 
 const appRoutes: Routes = [
   {
@@ -21,7 +23,8 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,
+  SigninComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -31,7 +34,8 @@ const appRoutes: Routes = [
     AngularFirestoreModule,
     AngularFireDatabaseModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,15 +1,11 @@
-<h2>hi</h2>
-<div *ngIf="auth.user$|async as user; else login">
+
+<div *ngIf="auth.user$ | async as user; else login">
   {{ user | json }}
   <hr />
   <button class="button" (click)="auth.signOut()">Sign out</button>
 </div>
 <ng-template #login>
-  <label>
-    Name:
-    <input type="text" [formControl]="name" required>
-  </label>
-  <button type="submit" class="button" (click)="auth.googleSignin(name.value)" [disabled]="!name.valid">login with google</button>
+  <signin></signin>
 </ng-template>
 
 <router-outlet></router-outlet>
