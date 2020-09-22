@@ -13,18 +13,53 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { SigninComponent } from './components/signin/signin.component';
+import { DashboardComponent } from './components/videoDashboard/dashboard.component';
+import { MyvideosComponent } from './components/videoDashboard/myvideos/myvideos.component';
+import { AddvideoComponent } from './components/videoDashboard/addVideo/addvideo.component';
+import { VideoComponent } from './components/videoDashboard/myvideos/video/video.component';
+import { AuthGuard } from './auth.guard';
 
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/',
+    redirectTo: 'login',
     pathMatch: 'full',
+  },
+  {
+    path:'login',
+    component:AppComponent
+
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        component: AddvideoComponent,
+      },
+      {
+        path: 'myvideos',
+        component: MyvideosComponent,
+      },
+      {
+        path: 'myvideos/:vid',
+        component: VideoComponent,
+      },
+    ],
   },
 ];
 
 @NgModule({
-  declarations: [AppComponent,
-  SigninComponent],
+  declarations: [
+    AppComponent,
+    SigninComponent,
+    DashboardComponent,
+    MyvideosComponent,
+    AddvideoComponent,
+    VideoComponent,
+  ],
   imports: [
     CommonModule,
     BrowserModule,
