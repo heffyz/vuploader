@@ -25,8 +25,8 @@ export class AuthentificationService {
   ) {
     // Get the auth state, then fetch the Firestore user document or return null
     this.user$ = this.afAuth.authState.pipe(
-      switchMap(user => {
-          // Logged in
+      switchMap((user) => {
+        // Logged in
         if (user) {
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
@@ -34,17 +34,17 @@ export class AuthentificationService {
           return of(null);
         }
       })
-    )
+    );
   }
 
   async googleSignin(name) {
     const provider = new auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
 
-    return this.updateUserData(credential.user,name);
+    return this.updateUserData(credential.user, name);
   }
 
-  private updateUserData(user,name) {
+  private updateUserData(user, name) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`
@@ -53,15 +53,15 @@ export class AuthentificationService {
     const data = {
       uid: user.uid,
       email: user.email,
-      name: name?name:user.displayName,
+      name: name ? name : user.displayName,
     };
 
-    this.user$.pipe(tap(user=>{console.log(user)}))
+    this.router.navigate(['/dashboard'], { skipLocationChange: false });
     return userRef.set(data, { merge: true });
   }
 
   async signOut() {
     await this.afAuth.signOut();
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 }

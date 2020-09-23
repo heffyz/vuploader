@@ -14,4 +14,5 @@ export class SigninComponent {
   name = new FormControl('',Validators.required);
   constructor(public auth: AuthentificationService) {
   }
+  
 }

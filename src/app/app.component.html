@@ -1,7 +1,1 @@
-
-<div *ngIf="auth.user$ | async as user; else login">
-  <dashboard></dashboard>
-</div>
-<ng-template #login>
-  <signin></signin>
-</ng-template>
+<router-outlet></router-outlet>

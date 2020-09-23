@@ -18,37 +18,7 @@ import { MyvideosComponent } from './components/videoDashboard/myvideos/myvideos
 import { AddvideoComponent } from './components/videoDashboard/addVideo/addvideo.component';
 import { VideoComponent } from './components/videoDashboard/myvideos/video/video.component';
 import { AuthGuard } from './auth.guard';
-
-const appRoutes: Routes = [
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
-  {
-    path: 'login',
-    component: AppComponent,
-  },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        component: AddvideoComponent,
-      },
-      {
-        path: 'myvideos',
-        component: MyvideosComponent,
-      },
-      {
-        path: 'myvideos/:vid',
-        component: VideoComponent,
-      },
-    ],
-  },
-];
+import { DndDirective } from './directives/dnd.directive';
 
 @NgModule({
   declarations: [
@@ -58,11 +28,11 @@ const appRoutes: Routes = [
     MyvideosComponent,
     AddvideoComponent,
     VideoComponent,
+    DndDirective,
   ],
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,

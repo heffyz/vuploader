@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="dropzone" appDnd>
+    <input
+      type="file"
+      id="fileDropRef"
+      (change)="fileBrowseHandler($event.target.files)"
+    />
+    <img src="../../../../assets/upload.png" />
+    <h4>Select Video files to upload</h4>
+    <h5>or drag and drop video files</h5>
+    <button mat-flat-button for="fileDropRef">Upload Video</button>
+  </div>
+</div>
