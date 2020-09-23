@@ -1,9 +1,18 @@
+<mat-progress-spinner
+  class="spinner"
+  color="warn"
+  *ngIf="submitted"
+  [value]="uploadProgress$ | async"
+  mode="determinate"
+>
+</mat-progress-spinner>
 <div class="container">
   <div class="dropzone" appDnd>
     <input
       type="file"
       id="fileDropRef"
       (change)="onFileSelected($event)"
+      accept="video/*"
     />
     <img src="../../../../assets/upload.png" />
     <h4>Select Video files to upload</h4>

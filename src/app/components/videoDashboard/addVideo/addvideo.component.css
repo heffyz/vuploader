@@ -6,6 +6,13 @@
   position: relative;
   margin: 0 auto;
 }
+.spinner {
+  z-index: 1000;
+  position: absolute;
+  top: 29%;
+  right: 47.5%;
+  text-align: center;
+}
 input {
   opacity: 0;
   position: absolute;
@@ -19,7 +26,7 @@ mat-icon {
   color: rgba(0, 0, 0, 0.589);
 }
 h4,
-h5  {
+h5 {
   font-family: Verdana, Geneva, sans-serif;
 }
 h5 {

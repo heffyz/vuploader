@@ -35,11 +35,12 @@ const routes: Routes = [
         path: 'myvideos',
         component: MyvideosComponent,
       },
-      {
-        path: 'myvideos/:vid',
-        component: VideoComponent,
-      },
     ],
+  },
+  {
+    path: 'dashboard/myvideos/:vid',
+    component: VideoComponent,
+    canActivate: [AuthGuard],
   },
 ];
 

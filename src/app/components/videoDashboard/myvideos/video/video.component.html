@@ -1,0 +1,76 @@
+<div class="component-wrapper">
+  <vg-player (onPlayerReady)="onPlayerReady($event)">
+    <vg-overlay-play></vg-overlay-play>
+    <vg-buffering></vg-buffering>
+
+    <vg-scrub-bar>
+      <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+      <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+    </vg-scrub-bar>
+
+    <vg-controls>
+      <vg-play-pause></vg-play-pause>
+      <vg-playback-button></vg-playback-button>
+
+      <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+
+      <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+
+      <vg-mute></vg-mute>
+      <vg-volume></vg-volume>
+
+      <vg-fullscreen></vg-fullscreen>
+    </vg-controls>
+
+    <video
+      #media
+      [vgMedia]="media"
+      [src]="downloadUrl"
+      id="singleVideo"
+      preload="auto"
+    ></video>
+  </vg-player>
+  <div class="left-side-wrapper">
+    <p>My List</p>
+
+    <mat-divider></mat-divider>
+    <div class="videos-list-wrapper">
+      <mat-list>
+        <div mat-subheader>Folders</div>
+        <mat-list-item *ngFor="let folder of folders">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>{{ folder.name }}</div>
+          <div mat-line>{{ folder.updated | date }}</div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <div mat-subheader>Notes</div>
+        <mat-list-item *ngFor="let note of notes">
+          <mat-icon mat-list-icon>note</mat-icon>
+          <div mat-line>{{ note.name }}</div>
+          <div mat-line>{{ note.updated | date }}</div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</div>
+<div class="footer-wrapper">
+  <div class="divider"><mat-divider></mat-divider></div>
+  <footer>
+    <div class="example-label">Basic</div>
+    <div class="example-button-row">
+      <div class="top-list">
+        <a href="https://www.google.com/" target="_blank">About </a>
+        <a href="https://www.google.com/" target="_blank">Press </a>
+        <a href="https://www.google.com/" target="_blank">Copyright </a>
+        <a href="https://www.google.com/" target="_blank">Advertise </a>
+        <a href="https://www.google.com/" target="_blank">Help </a>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="bottom-list">
+        <a href="https://www.google.com/" target="_blank">Terms </a>
+        <a href="https://www.google.com/" target="_blank">Privacy </a>
+      </div>
+    </div>
+    <div class="example-label">Langages</div>
+  </footer>
+</div>

@@ -22,9 +22,11 @@
     "@angular/platform-browser": "~10.1.2",
     "@angular/platform-browser-dynamic": "~10.1.2",
     "@angular/router": "~10.1.2",
+    "@videogular/ngx-videogular": "^2.1.0",
     "commonjs": "0.0.1",
     "firebase": "^7.21.0",
     "ngx-auth-firebaseui": "^4.4.0",
+    "ngx-videogular": "^10.1.0-0",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

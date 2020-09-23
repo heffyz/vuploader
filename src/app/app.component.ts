@@ -10,7 +10,6 @@ import { FormControl } from '@angular/forms';
 export class AppComponent {
   title = 'vuploader';
 
-  name = new FormControl('');
   constructor(public auth: AuthentificationService) {
   }
 }

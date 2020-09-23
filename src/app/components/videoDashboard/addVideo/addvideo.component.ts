@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { AuthentificationService } from 'src/app/services/authentification.service';
+import { VideoService } from 'src/app/services/video.service';
 
 @Component({
   selector: 'addvideo',
@@ -10,48 +12,47 @@ import { AuthentificationService } from 'src/app/services/authentification.servi
   styleUrls: ['./addvideo.component.css'],
 })
 export class AddvideoComponent implements OnInit, OnDestroy {
-  userSubscription;
+  destroy$: Subject<null> = new Subject();
   selectedFile: File = null;
-  fb;
-  downloadURL: Observable<string>;
+
+  submitted = false;
+  uploadProgress$: Observable<number>;
   files: any[] = [];
 
   constructor(
-    private storage: AngularFireStorage,
-    private authService: AuthentificationService
+    private authService: AuthentificationService,
+    private videoService: VideoService,
+    private router: Router
   ) {}
 
   ngOnInit() {}
   onFileSelected(event) {
-    this.userSubscription = this.authService.user$.subscribe((user) => {
+    this.submitted = true;
+
+    this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       if (user) {
-        var n = Date.now();
-        const file = event.target.files[0];
-        const filePath = `${user.uid}/${n}`;
-        const fileRef = this.storage.ref(filePath);
-        const task = this.storage.upload(`${user.uid}/${n}`, file);
-        task
-          .snapshotChanges()
-          .pipe(
-            finalize(() => {
-              this.downloadURL = fileRef.getDownloadURL();
-              this.downloadURL.subscribe((url) => {
-                if (url) {
-                  this.fb = url;
-                }
-                console.log(this.fb);
-              });
-            })
-          )
-          .subscribe((url) => {
-            if (url) {
-              console.log(url);
-            }
-          });
+        const {
+          downloadUrl$,
+          uploadProgress$,
+        } = this.videoService.updateVideoData(
+          { name: '', category: '' },
+          event.target.files[0],
+          user
+        );
+
+        this.uploadProgress$ = uploadProgress$;
+
+        downloadUrl$.pipe(takeUntil(this.destroy$)).subscribe((downloadUrl) => {
+          this.submitted = false;
+          console.log(downloadUrl);
+          this.router.navigate([
+            `/dashboard/myvideos/${this.videoService.vid}`,
+          ]);
+        });
       }
     });
   }
   ngOnDestroy() {
-    if (this.userSubscription) this.userSubscription.unsubscribe();
+    this.destroy$.next(null);
   }
 }

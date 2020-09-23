@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 
 @Component({
@@ -6,9 +7,11 @@ import { AuthentificationService } from 'src/app/services/authentification.servi
   templateUrl: 'dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-
 export class DashboardComponent implements OnInit {
-  constructor(public auth: AuthentificationService) {}
+  constructor(
+    public auth: AuthentificationService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }
