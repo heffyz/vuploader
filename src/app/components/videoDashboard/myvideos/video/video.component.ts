@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthentificationService } from 'src/app/services/authentification.service';
+import { StorageService } from 'src/app/services/storage.service';
 import { VideoService } from 'src/app/services/video.service';
 
 @Component({
@@ -57,18 +58,18 @@ export class VideoComponent implements OnInit, OnDestroy {
   constructor(
     public authService: AuthentificationService,
     private activatedRoute: ActivatedRoute,
-    private videoService: VideoService
+    private videoService: VideoService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit() {
-    console.log('hi');
+      
     this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
-      this.videoService
+      this.storageService
         .getVideoUrl(user, this.activatedRoute.snapshot.params.vid)
         .subscribe((url) => {
           if (url) this.downloadUrl = url;
         });
-      //this.videoService.getMyvideosDetailsByuid(user.uid).subscribe();
     });
   }
 

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { AuthentificationService } from 'src/app/services/authentification.service';
+import { StorageService } from 'src/app/services/storage.service';
 import { VideoService } from 'src/app/services/video.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class AddvideoComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthentificationService,
     private videoService: VideoService,
+    private storageService: StorageService,
     private router: Router
   ) {}
 
@@ -34,7 +36,7 @@ export class AddvideoComponent implements OnInit, OnDestroy {
         const {
           downloadUrl$,
           uploadProgress$,
-        } = this.videoService.updateVideoData(
+        } = this.storageService.updateVideoData(
           { name: '', category: '' },
           event.target.files[0],
           user
@@ -44,9 +46,17 @@ export class AddvideoComponent implements OnInit, OnDestroy {
 
         downloadUrl$.pipe(takeUntil(this.destroy$)).subscribe((downloadUrl) => {
           this.submitted = false;
+          this.videoService.addVideo({
+            name: event.target.files[0].name,
+            uid: user.uid,
+            category: '',
+            views: 0,
+            vid: this.storageService.vid,
+            date: new Date(),
+          });
           console.log(downloadUrl);
           this.router.navigate([
-            `/dashboard/myvideos/${this.videoService.vid}`,
+            `/dashboard/myvideos/${this.storageService.vid}`,
           ]);
         });
       }

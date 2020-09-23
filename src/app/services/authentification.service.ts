@@ -17,7 +17,7 @@ import { User } from '../models/user.model';
 })
 export class AuthentificationService {
   user$: Observable<User>;
-
+  uid;
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -28,6 +28,7 @@ export class AuthentificationService {
       switchMap((user) => {
         // Logged in
         if (user) {
+          this.uid = user.uid;
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           // Logged out
