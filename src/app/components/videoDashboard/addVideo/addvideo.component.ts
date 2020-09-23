@@ -1,67 +1,57 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 
 @Component({
   selector: 'addvideo',
   templateUrl: 'addvideo.component.html',
   styleUrls: ['./addvideo.component.css'],
 })
-export class AddvideoComponent implements OnInit {
-  constructor() {}
-
+export class AddvideoComponent implements OnInit, OnDestroy {
+  userSubscription;
+  selectedFile: File = null;
+  fb;
+  downloadURL: Observable<string>;
   files: any[] = [];
+
+  constructor(
+    private storage: AngularFireStorage,
+    private authService: AuthentificationService
+  ) {}
+
   ngOnInit() {}
-
-  /**
-   * on file drop handler
-   */
-  onFileDropped($event) {
-    this.prepareFilesList($event);
-  }
-
-  /**
-   * handle file from browsing
-   */
-  fileBrowseHandler(files) {
-    this.prepareFilesList(files);
-  }
-
-  /**
-   * Delete file from files list
-   * @param index (File index)
-   */
-  deleteFile(index: number) {
-    this.files.splice(index, 1);
-  }
-
-  /**
-   * Simulate the upload process
-   */
-  uploadFilesSimulator(index: number) {
-    setTimeout(() => {
-      if (index === this.files.length) {
-        return;
-      } else {
-        const progressInterval = setInterval(() => {
-          if (this.files[index].progress === 100) {
-            clearInterval(progressInterval);
-            this.uploadFilesSimulator(index + 1);
-          } else {
-            this.files[index].progress += 5;
-          }
-        }, 200);
+  onFileSelected(event) {
+    this.userSubscription = this.authService.user$.subscribe((user) => {
+      if (user) {
+        var n = Date.now();
+        const file = event.target.files[0];
+        const filePath = `${user.uid}/${n}`;
+        const fileRef = this.storage.ref(filePath);
+        const task = this.storage.upload(`${user.uid}/${n}`, file);
+        task
+          .snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.downloadURL = fileRef.getDownloadURL();
+              this.downloadURL.subscribe((url) => {
+                if (url) {
+                  this.fb = url;
+                }
+                console.log(this.fb);
+              });
+            })
+          )
+          .subscribe((url) => {
+            if (url) {
+              console.log(url);
+            }
+          });
       }
-    }, 1000);
+    });
   }
-
-  /**
-   * Convert Files list to normal array list
-   * @param files (Files List)
-   */
-  prepareFilesList(files: Array<any>) {
-    for (const item of files) {
-      item.progress = 0;
-      this.files.push(item);
-    }
-    this.uploadFilesSimulator(0);
+  ngOnDestroy() {
+    if (this.userSubscription) this.userSubscription.unsubscribe();
   }
 }

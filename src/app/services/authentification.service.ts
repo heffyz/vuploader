@@ -64,4 +64,7 @@ export class AuthentificationService {
     await this.afAuth.signOut();
     this.router.navigate(['/login']);
   }
+  currentUser(){
+    
+  }
 }
