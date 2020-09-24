@@ -33,7 +33,12 @@
   <div class="left-side-wrapper">
     <div class="videos-list-wrapper">
       <mat-list>
-        <div mat-subheader>My videos</div>
+        <div mat-subheader>
+          My videos
+          <button (click)="gotodashboard()" style="padding-left: 15vw" mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
         <mat-divider></mat-divider>
         <mat-list-item
           class="item-grid"
@@ -47,11 +52,12 @@
           <mat-icon mat-icon class="icon">folder</mat-icon>
           <div class="details">
             <div
-              style="color :{{
-                currentVid == video.vid
-                  ? 'rgba(255, 60, 60, 0.877)'
-                  : 'rgba(0, 0, 0, 0.658)'
-              }}"
+              [ngStyle]="{
+                color:
+                  currentVid == video.vid
+                    ? 'rgba(255, 60, 60, 0.877)'
+                    : 'rgba(0, 0, 0, 0.658)'
+              }"
               mat-line
             >
               {{ video.name }}
@@ -70,7 +76,7 @@
 <div class="footer-wrapper">
   <div class="divider"><mat-divider></mat-divider></div>
   <footer>
-    <div class="example-label">Basic</div>
+    <div class="example-label"><img src='../../../../../assets/logo.png' class="logo"></div>
     <div class="example-button-row">
       <div class="top-list">
         <a href="https://www.google.com/" target="_blank">About </a>

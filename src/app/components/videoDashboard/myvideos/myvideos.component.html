@@ -1,4 +1,3 @@
-<mat-divider></mat-divider>
 <div class="container" *ngIf="videos$ | async; else noVideos">
   <div *ngFor="let video of videos$ | async">
     <thumbnail [video]="video"></thumbnail>

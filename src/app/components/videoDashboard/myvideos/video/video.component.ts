@@ -60,7 +60,9 @@ export class VideoComponent implements OnInit, OnDestroy {
     
     this.videoService.incrementViews(video.vid);
   }
-
+  gotodashboard(){
+    this.router.navigateByUrl('/dashboard/add');
+  }
   ngOnDestroy() {
     this.destroy$.next(null);
   }
