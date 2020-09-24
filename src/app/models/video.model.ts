@@ -3,6 +3,6 @@ export interface Video {
   uid: string;
   name: string;
   category: string;
-  views: number,
-  date: Date
+  views: number;
+  date: Date;
 }

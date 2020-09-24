@@ -54,7 +54,6 @@ export class AddvideoComponent implements OnInit, OnDestroy {
             vid: this.storageService.vid,
             date: new Date(),
           });
-          console.log(downloadUrl);
           this.router.navigate([
             `/dashboard/myvideos/${this.storageService.vid}`,
           ]);

@@ -31,28 +31,42 @@
     ></video>
   </vg-player>
   <div class="left-side-wrapper">
-    <p>My List</p>
-
-    <mat-divider></mat-divider>
     <div class="videos-list-wrapper">
       <mat-list>
-        <div mat-subheader>Folders</div>
-        <mat-list-item *ngFor="let folder of folders">
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>{{ folder.name }}</div>
-          <div mat-line>{{ folder.updated | date }}</div>
-        </mat-list-item>
+        <div mat-subheader>My videos</div>
         <mat-divider></mat-divider>
-        <div mat-subheader>Notes</div>
-        <mat-list-item *ngFor="let note of notes">
-          <mat-icon mat-list-icon>note</mat-icon>
-          <div mat-line>{{ note.name }}</div>
-          <div mat-line>{{ note.updated | date }}</div>
+        <mat-list-item
+          class="item-grid"
+          *ngFor="let video of videos$ | async; let i = index"
+          (click)="currentVid != video.vid ? gotoVideo(video) : null"
+        >
+          <div style="color: grey" class="index">
+            {{ i + 1 }}
+            <mat-divider [vertical]="true"></mat-divider>
+          </div>
+          <mat-icon mat-icon class="icon">folder</mat-icon>
+          <div class="details">
+            <div
+              style="color :{{
+                currentVid == video.vid
+                  ? 'rgba(255, 60, 60, 0.877)'
+                  : 'rgba(0, 0, 0, 0.658)'
+              }}"
+              mat-line
+            >
+              {{ video.name }}
+            </div>
+            <div style="color: grey" mat-line>{{ video.views }} views</div>
+          </div>
+          <mat-divider></mat-divider>
         </mat-list-item>
       </mat-list>
     </div>
   </div>
 </div>
+
+<!----------------- footer  -------------->
+
 <div class="footer-wrapper">
   <div class="divider"><mat-divider></mat-divider></div>
   <footer>

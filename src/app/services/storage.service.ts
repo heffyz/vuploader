@@ -26,6 +26,7 @@ export class StorageService {
   updateVideoData(value, file, user) {
     this.vid = this.afs.createId();
 
+    console.log(file)
     if (user) {
       const filePath = `${user.uid}/${this.vid}`;
       const fileRef = this.storage.ref(filePath);
@@ -75,7 +76,6 @@ export class StorageService {
   getVideoUrl(user, vid) {
     const filePath = `${user.uid}`;
     const fileRef = this.storage.ref(filePath);
-
     return fileRef.child(`${vid}`).getDownloadURL();
   }
 }

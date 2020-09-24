@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthentificationService } from 'src/app/services/authentification.service';
@@ -12,50 +12,13 @@ import { VideoService } from 'src/app/services/video.service';
   styleUrls: ['./video.component.css'],
 })
 export class VideoComponent implements OnInit, OnDestroy {
-  folders = [
-    {
-      name: 'Photos',
-      updated: new Date('1/1/16'),
-    },
-    {
-      name: 'Recipes',
-      updated: new Date('1/17/16'),
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
-    },
-  ];
-  notes = [
-    {
-      name: 'Vacation Itinerary',
-      updated: new Date('2/20/16'),
-    },
-    {
-      name: 'Kitchen Remodel',
-      updated: new Date('1/18/16'),
-    },
-    {
-      name: 'Kitchen Remodel',
-      updated: new Date('1/18/16'),
-    },
-    {
-      name: 'Kitchen Remodel',
-      updated: new Date('1/18/16'),
-    },
-    {
-      name: 'Kitchen Remodel',
-      updated: new Date('1/18/16'),
-    },
-    {
-      name: 'Kitchen Remodel',
-      updated: new Date('1/18/16'),
-    },
-  ];
-
   destroy$: Subject<null> = new Subject();
   downloadUrl;
+  videos$;
+  api;
+  currentVid;
   constructor(
+    private router: Router,
     public authService: AuthentificationService,
     private activatedRoute: ActivatedRoute,
     private videoService: VideoService,
@@ -63,18 +26,17 @@ export class VideoComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-      
+    this.currentVid =  this.activatedRoute.snapshot.params.vid;
+    this.videoService.incrementViews(this.activatedRoute.snapshot.params.vid);
     this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       this.storageService
-        .getVideoUrl(user, this.activatedRoute.snapshot.params.vid)
+        .getVideoUrl(user,this.currentVid)
         .subscribe((url) => {
           if (url) this.downloadUrl = url;
         });
     });
+    this.videos$ = this.videoService.getAllVideos();
   }
-
-  currentIndex = 0;
-  api;
 
   onPlayerReady(api) {
     this.api = api;
@@ -86,6 +48,17 @@ export class VideoComponent implements OnInit, OnDestroy {
 
   playVideo() {
     this.api.play();
+  }
+  gotoVideo(video) {
+    this.currentVid = video.vid;
+    this.router.navigateByUrl('/dashboard/myvideos/' + video.vid);
+    this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
+      this.storageService.getVideoUrl(user, video.vid).subscribe((url) => {
+        if (url) this.downloadUrl = url;
+      });
+    });
+    
+    this.videoService.incrementViews(video.vid);
   }
 
   ngOnDestroy() {

@@ -1,0 +1,9 @@
+<div *ngIf="uid == video.uid" (click)="goToVideo()">
+  <img class="thumbnail-img" src="../../../../../assets/thumbnail.png" />
+  <div class="text">
+  <span class="name-style"
+    ><strong>{{ video?.name }}</strong></span
+  >
+  <br>
+  <span class="date-style"> {{ video?.views }} view</span>
+</div></div>

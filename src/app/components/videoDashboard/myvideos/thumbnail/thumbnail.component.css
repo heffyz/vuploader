@@ -1,0 +1,15 @@
+.thumbnail-img {
+ 
+  height: 19vh;
+}
+
+.name-style {
+  text-align: justify;
+  font-size: small;
+}
+.date-style {
+  text-align: justify;
+  font-family: Verdana, Geneva, sans-serif;
+  color: gray;
+  font-size:small;
+}

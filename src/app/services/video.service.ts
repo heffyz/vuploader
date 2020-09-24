@@ -15,6 +15,7 @@ import {
   AngularFireUploadTask,
 } from '@angular/fire/storage';
 import { AuthentificationService } from './authentification.service';
+import { firestore } from 'firebase';
 
 @Injectable({
   providedIn: 'root',
@@ -48,10 +49,13 @@ export class VideoService {
     return this.videos$;
   }
   addVideo(video: Video) {
-    this.videoDoc = this.afs.doc(
-      `videos/${video.vid}`
-    );
+    this.videoDoc = this.afs.doc(`videos/${video.vid}`);
     this.videoDoc.set(video, { merge: true });
   }
 
+  incrementViews(vid) {
+    const vidRef = this.afs.collection('videos').doc(`${vid}`);
+    const increment = firestore.FieldValue.increment(1);
+    vidRef.update({ views: increment });
+  }
 }

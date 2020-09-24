@@ -1,0 +1,16 @@
+.container {
+  display: grid;
+  grid-template-columns: 20vw 20vw 20vw 20vw;
+  grid-gap: 12px;
+  padding: 10vh 10vw;
+}
+
+.container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+h5 {
+  text-align: center;
+}

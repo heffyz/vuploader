@@ -1,29 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './material.module';
+
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireStorage } from '@angular/fire/storage'; 
-import { environment } from '../environments/environment';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from './material.module';
+import { AngularFireStorage } from '@angular/fire/storage';
+
+import { AppComponent } from './app.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { DashboardComponent } from './components/videoDashboard/dashboard.component';
 import { MyvideosComponent } from './components/videoDashboard/myvideos/myvideos.component';
 import { AddvideoComponent } from './components/videoDashboard/addVideo/addvideo.component';
 import { VideoComponent } from './components/videoDashboard/myvideos/video/video.component';
-import { DndDirective } from './directives/dnd.directive';
-import { VgCoreModule } from '@videogular/ngx-videogular/core';
+import { ThumbnailComponent } from './components/videoDashboard/myvideos/thumbnail/thumbnail.component';
 
+import { DndDirective } from './directives/dnd.directive';
+
+import { VgCoreModule } from '@videogular/ngx-videogular/core';
 import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
+
+import { VideoService } from './services/video.service';
+import { AuthentificationService } from './services/authentification.service';
+import { StorageService } from './services/storage.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +39,7 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     MyvideosComponent,
     AddvideoComponent,
     VideoComponent,
+    ThumbnailComponent,
     DndDirective,
   ],
   imports: [
@@ -59,7 +67,12 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     VgOverlayPlayModule,
     VgBufferingModule,
   ],
-  providers: [AngularFireStorage],
+  providers: [
+    AngularFireStorage,
+    VideoService,
+    AuthentificationService,
+    StorageService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
